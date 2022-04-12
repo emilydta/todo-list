@@ -8,36 +8,28 @@
     <title>ToDo List</title>
 </head>
 <body>
-    <button type="button" id="add-new-todo">Add New Todo</button>
-    <div id="new-todo-screen">
+    <div id="todo-screen" style="display: none;">
         <form id="new-todo-form">
             <input type="text" id="title" placeholder="Title"><br>
             <input type="text" id="description" placeholder="Description"><br>
+            <input type="date" id="date-input">
+            <input type="time" id="time-input"><br>
             <div class="priority-select">
                 <label for="priority-dropdown">Select priority</label>
                 <select name="priority-dropdown" id="priority-dropdown">
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
+                    <option></option>
+                    <option value="High" class="new-todo-setting">High</option>
+                    <option value="Medium" class="new-todo-setting">Medium</option>
+                    <option value="Low" class="new-todo-setting">Low</option>
                 </select>
             </div>
             <div class="folders-select">
                 <label for="folder-dropdown">Select folder</label>
                 <select name="folder-dropdown" id="folder-dropdown"></select>
             </div>
-            <button type="button" id="confirm-new-todo">Add Todo</button>
+            <button type="button" id="confirm-todo">Add Todo</button>
         </form>
     </div>
-    <div id="side-menu">
-        <div class="folders">Folders
-            <ul id="side-menu-folders"></ul>
-        </div>
-        <div class="create-new-folder">
-            <button type="button" id="add-folder-button">Add New Folder</button>
-            <input type="text" id="folder-name-input" placeholder="Folder Name" style="display: none;">
-            <button type="button" id="cancel-new-folder" style="display: none;">X</button>
-        </div>  
-    </div> 
-    <div id="todo-display"></div>
+    <div id="overlay"></div>
 </body>
 </html>
