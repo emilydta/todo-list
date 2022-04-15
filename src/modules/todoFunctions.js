@@ -1,7 +1,7 @@
 
 const todoFunctions = () => {
     const addToFolders = (todo, mainFolder) => {
-        const folderDropdown = document.getElementsById('folder-dropdown');
+        const folderDropdown = document.getElementById('folder-dropdown');
         for (let i = 0; i < mainFolder.length; i++) {
             if (folderDropdown.value == "all-todos") {
                 mainFolder[0].todos.push(todo);

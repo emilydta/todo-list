@@ -7,17 +7,20 @@ body {
 
 #main-header {
     display: flex;
+    position: fixed;
     justify-content: space-between;
     align-items: center;
     background: black;
     color: white;
+    width: 100%;
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 10px;
     padding-bottom: 10px;
+    z-index: 5;
 }
 
-#sidebar > div, #todo-list-container > div {
+#folders > li, #todo-list-container > div, #add-new-todo, #create-new-folder, #cancel-new-todo {
     cursor: pointer;
 }
 
@@ -35,6 +38,7 @@ body {
     min-height: 100vh;
     min-width: 10vw;
     overflow: hidden;
+    z-index: 5;
 }
 
 #todo-list-container {
@@ -44,6 +48,8 @@ body {
     width: 90vw;
     height: 100vh;
     padding: 20px;
+    margin-top: 8em;
+    margin-left: 5em;
     overflow: hidden;
 }
 
@@ -64,6 +70,7 @@ body {
 
 .todo-key, .todo-value {
     margin-right: 1em;
+    margin-top: 1em;
 }
 
 .todo-key {
@@ -80,11 +87,12 @@ body {
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.5);
-    z-index: 2;
+    z-index: 7;
 }
 
-#new-todo-screen {
+#todo-screen {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 1em;
@@ -97,8 +105,100 @@ body {
     width: 500px;
     max-width: 80%;
     height: 200px;
+    padding-bottom: 15px;
 }
 
-li {
-    text-decoration: none;
+#add-new-todo {
+    margin-right: 5em;
+    padding: 0.8em;
+    background: white;
+    color: black;
+    border-radius: 1.5em;
+}
+
+#folders-heading {
+    font-size: 1.3em;
+}
+
+#create-new-folder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    background: black;
+    color: white;
+    padding: 0.7em;
+    border-radius: 1.5em;
+    font-size: 0.9rem;
+}
+
+#folders > li {
+    padding-bottom: 1em;
+}
+
+#folders {
+    position: fixed;
+    padding: 2em;
+}
+
+#cancel-new-todo {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 95%;
+}
+
+#new-todo-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit {
+    margin-right: 1em;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    font-weight: 600;
+}
+
+.remove {
+    background: red;
+    color: white;
+    padding: 0.5em;
+    border-radius: 1.5em;
+}
+
+#all-todos {
+    font-size: 1.2em;
+}
+
+.active {
+    font-weight: bold;
+}
+
+#new-folder-container {
+    display: flex;
+    position: fixed;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+#new-folder-input {
+    width: 10em;
+}
+
+#add-new-folder:hover {
+    cursor: pointer;
+    background: black;
+    color: white;
+    border-radius: 40%;
+    padding: 0.2em;
+}
+
+.hide {
+    display: none !important;
 }
