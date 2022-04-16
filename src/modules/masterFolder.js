@@ -1,28 +1,12 @@
 const masterFolder = [{
     folderName: "All Todos",
     todos: [{
-        Title: "thing",
-        Description: "desciprwf",
+        Title: "Test",
+        Description: "",
         Priority: "High",
         Date: "",
-        Folder: "",
+        Folder: "Project",
         idNumber: "123"
-    },
-    {
-        Title: "bloop",
-        Description: "desciprwf",
-        Priority: "Low",
-        Date: "",
-        Folder: "",
-        idNumber: "124"
-    },
-    {
-        Title: "sdfp",
-        Description: "desciprwf",
-        Priority: "Low",
-        Date: "",
-        Folder: "",
-        idNumber: "127"
     },
     ],
     idNumber: "all-todos"
@@ -30,21 +14,13 @@ const masterFolder = [{
 {
     folderName: "Project",
     todos: [{
-        Title: "thing",
-        Description: "desciprwf",
+        Title: "Test",
+        Description: "",
         Priority: "High",
         Date: "",
-        Folder: "",
-        idNumber: "123"
-    },
-    {
-        Title: "bloop",
-        Description: "desciprwf",
-        Priority: "Low",
-        Date: "",
-        Folder: "",
-        idNumber: "124"
-    },
+        Folder: "Project",
+        idNumber: "123",
+    }
     ],
     idNumber: "project"
 },
