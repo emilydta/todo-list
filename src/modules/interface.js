@@ -1,6 +1,8 @@
 import { createNewTodo } from "./createNewTodo";
-import { masterFolder } from "./masterFolder";
+import { createNewFolder } from "./createNewFolder";
 import { todoFunctions } from "./todoFunctions";
+
+const useFunction = todoFunctions();
 
 const createDisplay = () => {
     const overlay = document.getElementById('overlay');
@@ -31,7 +33,7 @@ const createDisplay = () => {
         containerHeading.innerText = todoFolder.folderName;
         folderContainer.appendChild(containerHeading);
 
-        // Creates list of todos and attached buttons inside container
+        // Creates list of todos and attached buttons/features
         todoFolder.todos.forEach(todo => {
             const todoDiv = document.createElement('div');
             const todoRow = document.createElement('div');
@@ -41,6 +43,7 @@ const createDisplay = () => {
             const todoExpander = document.createElement('div');
             todoExpander.setAttribute('class', `todo-expander`);
             todoExpander.style.display = 'none';
+            todoExpander.style.flexWrap = 'wrap';
             Object.keys(todo).forEach(key => {
                 if (key == "idNumber") {
                     return;
@@ -63,13 +66,11 @@ const createDisplay = () => {
             buttonContainer.setAttribute('class', 'button-container');
 
             const editButton = document.createElement('div');
-            editButton.setAttribute('id', `edit ${todo.idNumber}`);
-            editButton.setAttribute('class', 'edit');
+            editButton.setAttribute('class', `edit ${todo.idNumber}`);
             editButton.innerText = "Edit";
 
             const removeButton = document.createElement('div');
-            removeButton.setAttribute('id', `remove ${todo.idNumber}`);
-            removeButton.setAttribute('class', 'remove');
+            removeButton.setAttribute('class', `remove ${todo.idNumber}`);
             removeButton.innerText = "Remove";
             
             todoDiv.appendChild(todoRow);
@@ -118,8 +119,7 @@ const createDisplay = () => {
         })
 
         folders.appendChild(createNewFolderButton);
-        sidebar.appendChild(folders);
-        console.log(sidebar)
+        sidebar.appendChild(folders); 
         return containers.appendChild(sidebar);
     }
 
@@ -132,20 +132,25 @@ const createDisplay = () => {
         folders.insertBefore(folderListing, folderButton);
     }
 
-    const createNewTodoScreen = () => {
-        const populateFolderDropdown = (mainFolder) => {
-            const folderDropdown = document.getElementById('folder-dropdown');
-            folderDropdown.innerHTML = "";
-            for (let folder in mainFolder) {
-                const newFolderListing = document.createElement(`option`);
-                newFolderListing.setAttribute('class', `${mainFolder[folder].idNumber}`);
-                newFolderListing.innerText = mainFolder[folder].folderName;
-                newFolderListing.value = mainFolder[folder].idNumber;
-                folderDropdown.appendChild(newFolderListing);
-            }
+    const populateFolderDropdown = (mainFolder) => {
+        const folderDropdown = document.getElementById('folder-dropdown');
+        folderDropdown.innerHTML = "";
+        for (let folder in mainFolder) {
+            const newFolderListing = document.createElement(`option`);
+            newFolderListing.setAttribute('class', `${mainFolder[folder].idNumber}`);
+            newFolderListing.innerText = mainFolder[folder].folderName;
+            newFolderListing.value = mainFolder[folder].idNumber;
+            folderDropdown.appendChild(newFolderListing);
         }
+    }
+
+    const createNewTodoScreen = (mainFolder) => {
+        useFunction.resetInputValues();
+        let confirmTodo = document.getElementsByClassName('todo-action-button');
+        confirmTodo[0].setAttribute('id', 'confirm-todo');
+        confirmTodo[0].innerText = 'Add Todo';
         showTodoScreen();
-        populateFolderDropdown(masterFolder);
+        populateFolderDropdown(mainFolder);
     }
 
     const createNewFolderScreen = () => {
@@ -168,10 +173,13 @@ const createDisplay = () => {
         folders.appendChild(container);
     }
 
-    const createEditScreen = () => {
-        const editTodoScreen = document.getElementById('todo-screen');
-        editTodoScreen.style.display = "flex";
-        overlay.style.display = "flex";
+    const createEditScreen = (mainFolder) => {
+        useFunction.resetInputValues();
+        let confirmEdit = document.getElementsByClassName('todo-action-button');
+        confirmEdit[0].setAttribute('id', 'confirm-edit');
+        confirmEdit[0].innerText = 'Edit';
+        showTodoScreen();
+        populateFolderDropdown(mainFolder);
     }
 
     const hideTodoScreen = () => {
@@ -184,6 +192,107 @@ const createDisplay = () => {
         newTodoScreen.style.display = "flex";
     }
 
+    const sidebarFolderButtonFunctionality = (mainFolder) => {
+        const sidebar = document.getElementById('sidebar');
+        const folders = document.getElementById('folders');
+        sidebar.addEventListener('click', (e) => {
+            for (let folder in mainFolder) {
+                if (e.target.id == mainFolder[folder].idNumber) {
+                    const todoListContainer = document.getElementById('todo-list-container');
+                    todoListContainer.remove();
+                    folders.childNodes.forEach((folder) => {
+                        folder.classList.remove('active');
+                      });
+                    if (e.target.id !== "all-todos") {
+                        e.target.classList.add('active');
+                    }
+                    createFolderContentsDisplay(mainFolder[folder]);
+                }
+            }   
+        })  
+    }
+
+    const eventListeners = (mainFolder) => {
+        document.addEventListener('click', (e) => {
+            if (e.target.id == "add-new-todo") {
+                createNewTodoScreen(mainFolder);
+            }
+            if (e.target.id == "confirm-todo") {
+                createNewTodo();
+                const todoListContainer = document.getElementById('todo-list-container');
+                if (!document.getElementById("title").value) {
+                    return
+                } else 
+                for ( let folder in mainFolder) {
+                    if (mainFolder[folder].idNumber == todoListContainer.className) {
+                        todoListContainer.remove();
+                        createFolderContentsDisplay(mainFolder[folder]);
+                    }
+                }  
+            }
+            if (e.target.id == "cancel-new-todo") {
+                hideTodoScreen();
+            }
+            if (e.target.id == "create-new-folder") {
+                const newFolderContainer = document.getElementById('new-folder-container');
+                if (newFolderContainer.classList == 'active') {
+                    newFolderContainer.classList = 'hide'
+                } else newFolderContainer.classList = "active";
+            }
+            if (e.target.id == "add-new-folder") {
+                if (!document.getElementById('new-folder-input').value) {
+                    return;
+                }
+                const newFolderContainer = document.getElementById('new-folder-container');
+                const createFolder = createNewFolder();
+                createNewFolderListing(createFolder.newFolder);
+                newFolderContainer.classList = 'hide'
+            }
+            if (e.target.classList[0] == 'remove') {
+                for (let folder in mainFolder) { 
+                    for (let todoIndex in mainFolder[folder].todos) {
+                        if (e.target.classList[1] == mainFolder[folder].todos[todoIndex].idNumber) {
+                            mainFolder[folder].todos.splice(todoIndex, 1);
+                            const todoContainer = e.target.parentNode;
+                            todoContainer.parentNode.remove();
+                        }
+                    }
+                }
+            }
+            if (e.target.classList[0] == 'edit') {
+                createEditScreen(mainFolder);
+                for (let folder in mainFolder) { 
+                    for (let todoIndex in mainFolder[folder].todos) {
+                        if (e.target.classList[1] == mainFolder[folder].todos[todoIndex].idNumber) {
+                            const editButton = document.getElementById('confirm-edit');
+                            editButton.classList.add(`${mainFolder[folder].todos[todoIndex].idNumber}`)
+                            useFunction.editTodoInputData(mainFolder[folder].todos[todoIndex]);
+                        }
+                    }
+                }
+                
+            }
+            if (e.target.id == "confirm-edit") {
+                let todoId = '';
+                for (let folder in mainFolder) { 
+                    for (let todoIndex in mainFolder[folder].todos) {
+                        if (e.target.classList[1] == mainFolder[folder].todos[todoIndex].idNumber) {
+                            todoId = mainFolder[folder].todos[todoIndex].idNumber;
+                        }
+                    }
+                }
+                useFunction.editTodo(todoId, mainFolder);
+                const todoListContainer = document.getElementById('todo-list-container');
+                for ( let folder in mainFolder) {
+                    if (mainFolder[folder].idNumber == todoListContainer.className) {
+                        todoListContainer.remove();
+                        createFolderContentsDisplay(mainFolder[folder]);
+                    }
+                }  
+            }
+        })
+    }
+
     return {
         createHeader, 
         createFolderContentsDisplay, 
@@ -194,6 +303,8 @@ const createDisplay = () => {
         createEditScreen,
         hideTodoScreen,
         showTodoScreen,
+        sidebarFolderButtonFunctionality,
+        eventListeners,
     }
 }
 
