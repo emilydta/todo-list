@@ -2,11 +2,12 @@ const masterFolder = [{
     folderName: "All Todos",
     todos: [{
         Title: "Test",
-        Description: "",
+        Description: "blah blah blah",
         Priority: "High",
-        Date: "",
+        Date: "29/Apr/2022 21:00",
         Folder: "Project",
-        idNumber: "123"
+        idNumber: "123",
+        FolderId: "project",
     },
     ],
     idNumber: "all-todos"
@@ -15,11 +16,12 @@ const masterFolder = [{
     folderName: "Project",
     todos: [{
         Title: "Test",
-        Description: "",
+        Description: "blah blah blah",
         Priority: "High",
-        Date: "",
+        Date: "29/Apr/2022 21:00",
         Folder: "Project",
         idNumber: "123",
+        FolderId: "project",
     }
     ],
     idNumber: "project"

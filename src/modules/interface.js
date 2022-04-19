@@ -45,7 +45,7 @@ const createDisplay = () => {
             todoExpander.style.display = 'none';
             todoExpander.style.flexWrap = 'wrap';
             Object.keys(todo).forEach(key => {
-                if (key == "idNumber") {
+                if (key == "idNumber" || key == "FolderId") {
                     return;
                 }
                 const todoKeys = document.createElement('div');
@@ -273,15 +273,15 @@ const createDisplay = () => {
                 
             }
             if (e.target.id == "confirm-edit") {
-                let todoId = '';
                 for (let folder in mainFolder) { 
                     for (let todoIndex in mainFolder[folder].todos) {
                         if (e.target.classList[1] == mainFolder[folder].todos[todoIndex].idNumber) {
-                            todoId = mainFolder[folder].todos[todoIndex].idNumber;
+                            console.log(mainFolder[folder].todos[todoIndex])
+                           useFunction.editTodo(mainFolder[folder].todos[todoIndex], mainFolder);
                         }
                     }
                 }
-                useFunction.editTodo(todoId, mainFolder);
+                //useFunction.editTodo(mainFolder);
                 const todoListContainer = document.getElementById('todo-list-container');
                 for ( let folder in mainFolder) {
                     if (mainFolder[folder].idNumber == todoListContainer.className) {

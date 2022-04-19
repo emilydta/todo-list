@@ -43,15 +43,7 @@ const todoFunctions = () => {
         return folder;
     }
 
-    const replaceTodo = (todo, mainFolder) => {
-        for (let folder in mainFolder) {
-            for (let todoIndex in mainFolder[folder].todos) {
-                if (mainFolder[folder].todos[todoIndex].idNumber == todo.idNumber) {
-                    mainFolder[folder].todos.splice(todoIndex, 1);
-                }
-            }
-        }
-    }
+    
 
     const addToMasterFolder = (folder, mainFolder) => {
         mainFolder.push(folder);
@@ -67,24 +59,53 @@ const todoFunctions = () => {
         titleInput.value = todo.Title;
         descriptionInput.value = todo.Description;
         priorityDropdown.value = todo.Priority;
-        folderDropdown.value = todo.Folder;
+        folderDropdown.value = todo.FolderId
     }
-
-    const editTodo = (todoId, mainFolder) => {
-        if (!titleInput.value) {
-            return alert ("Please add a title for your todo.")
-        } else {
-        let newTodo = newTodoTemplate(
-            `${titleInput.value}`, 
-            `${descriptionInput.value}`, 
-            `${priorityDropdown.value}`, 
-            `${transformDateDisplay(dateInput.value)} ${timeInput.value}`, 
-            `${findFolderName(mainFolder)}`, `${todoId}`
-            );
-            replaceTodo(newTodo, mainFolder);
-            addToFolders(newTodo, mainFolder);
+    const editTodo = (todo, mainFolder) => {
+        const editTodoValues = (todo, mainFolder) => {
+            todo.Title = titleInput.value;
+            todo.Description = descriptionInput.value;
+            todo.Priority = priorityDropdown.value;
+            todo.Folder = findFolderName(mainFolder);
+            todo.FolderId = folderDropdown.value;
         }
-    }
+
+        const addEditedTodoToFolders = (todo, mainFolder) => {
+            for (let i = 1; i < mainFolder.length; i++) {
+                if (mainFolder[i].todos.length == 0 && todo.FolderId == mainFolder[i].idNumber) {
+                    mainFolder[i].todos.push(todo);
+                    return;
+                }
+                for (let j = 0; j < mainFolder[i].todos.length; j++) {
+                    if (mainFolder[i].todos[j].idNumber == todo.idNumber) {
+                        return;
+                    }
+                    if (todo.FolderId == mainFolder[i].idNumber) {
+                        mainFolder[i].todos.push(todo);
+                        return;
+                    }
+                }
+            }
+        }
+        const removeEditedTodoFromFolders = (todo, mainFolder) => {
+            for (let i = 1; i < mainFolder.length; i++) {
+                for (let j = 0; j < mainFolder[i].todos.length; j++) {
+                    if (mainFolder[i].todos[j].idNumber == todo.idNumber) {
+                        if (todo.FolderId !== mainFolder[i].idNumber) {
+                            mainFolder[i].todos.splice(j, 1);
+                        } 
+                    }
+                }
+            }
+        }
+        
+        editTodoValues(todo, mainFolder);
+        //removeEditedTodoFromFolders(todo, mainFolder);
+        addEditedTodoToFolders(todo, mainFolder);
+        
+
+
+    }   
 
     const resetInputValues = () => {
         titleInput.value = '';
@@ -105,6 +126,7 @@ const todoFunctions = () => {
         priorityDropdown,
         dateInput,
         timeInput,
+        folderDropdown,
         editTodoInputData,
         editTodo,
         resetInputValues,

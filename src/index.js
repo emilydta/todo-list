@@ -9,3 +9,4 @@ display.createFolderContentsDisplay(masterFolder[0])
 display.sidebarFolderButtonFunctionality(masterFolder);
 display.createNewFolderScreen();
 display.eventListeners(masterFolder);
+console.log(masterFolder)
