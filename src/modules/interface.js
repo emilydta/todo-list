@@ -276,8 +276,8 @@ const createDisplay = () => {
                 for (let folder in mainFolder) { 
                     for (let todoIndex in mainFolder[folder].todos) {
                         if (e.target.classList[1] == mainFolder[folder].todos[todoIndex].idNumber) {
-                            console.log(mainFolder[folder].todos[todoIndex])
                            useFunction.editTodo(mainFolder[folder].todos[todoIndex], mainFolder);
+                           //console.log(mainFolder[folder].todos[todoIndex])
                         }
                     }
                 }

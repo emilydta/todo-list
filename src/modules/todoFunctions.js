@@ -70,40 +70,45 @@ const todoFunctions = () => {
             todo.FolderId = folderDropdown.value;
         }
 
-        const addEditedTodoToFolders = (todo, mainFolder) => {
-            for (let i = 1; i < mainFolder.length; i++) {
-                if (mainFolder[i].todos.length == 0 && todo.FolderId == mainFolder[i].idNumber) {
-                    mainFolder[i].todos.push(todo);
-                    return;
-                }
-                for (let j = 0; j < mainFolder[i].todos.length; j++) {
-                    if (mainFolder[i].todos[j].idNumber == todo.idNumber) {
-                        return;
-                    }
-                    if (todo.FolderId == mainFolder[i].idNumber) {
-                        mainFolder[i].todos.push(todo);
-                        return;
-                    }
-                }
-            }
-        }
         const removeEditedTodoFromFolders = (todo, mainFolder) => {
             for (let i = 1; i < mainFolder.length; i++) {
-                for (let j = 0; j < mainFolder[i].todos.length; j++) {
-                    if (mainFolder[i].todos[j].idNumber == todo.idNumber) {
-                        if (todo.FolderId !== mainFolder[i].idNumber) {
-                            mainFolder[i].todos.splice(j, 1);
-                        } 
-                    }
+                if (mainFolder[i].todos.includes(todo) && mainFolder[i].idNumber !== todo.FolderId) {
+                    mainFolder[i].todos.splice(mainFolder[i].todos.indexOf(todo), 1);
+                    return;
+                } 
+            }
+        }
+
+        let todoIndex = 0;
+        const addEditedTodoToFolders = (todo, mainFolder) => {
+            for (let i = 1; i < mainFolder.length; i++) {
+                if (todo.FolderId == mainFolder[i].idNumber) {
+                    mainFolder[i].todos.push(todo);
                 }
+                if (mainFolder[i].todos.indexOf(todo) >= 0) {
+                    todoIndex++
+                }
+                console.log(todoIndex)
+                if (todoIndex > 1) {
+                    //console.log(mainFolder[i])
+                    mainFolder[i].todos.splice(mainFolder[i].todos.indexOf(todo), 1);
+                }
+
+                // mainFolder[i].todos.forEach((todoItem => {
+                //     console.log(todoItem.idNumber)
+                //     if (mainFolder[i].idNumber == todo.FolderId && !todoItem.idNumber.includes(todo.idNumber)) {
+                //         mainFolder[i].todos.push(todo);
+                //         console.log(todo)
+                //         return;
+                //     }   
+                // }))
+                 
             }
         }
         
         editTodoValues(todo, mainFolder);
-        //removeEditedTodoFromFolders(todo, mainFolder);
+        removeEditedTodoFromFolders(todo, mainFolder);
         addEditedTodoToFolders(todo, mainFolder);
-        
-
 
     }   
 
