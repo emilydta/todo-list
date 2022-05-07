@@ -1,24 +1,20 @@
 import { todoFunctions } from "./todoFunctions";
 import { masterFolder } from './masterFolder';
 
-const newTodoTemplate = (Title, Description, Priority, Date, Folder, idNumber, FolderId) => {
-    return { Title, Description, Priority, Date, Folder, idNumber, FolderId }
+const newTodoTemplate = (Title, Description, Priority, Date, Time, Folder, idNumber) => {
+    return { Title, Description, Priority, Date, Time, Folder, idNumber }
 }
 
 const createNewTodo = (newTodo) => { 
     const useFunction = todoFunctions();
-    if (!useFunction.titleInput.value) {
-        return alert ("Please add a title for your todo.")
-    } else {
-        newTodo = newTodoTemplate(
-            `${useFunction.titleInput.value}`, 
-            `${useFunction.descriptionInput.value}`, 
-            `${useFunction.priorityDropdown.value}`, 
-            `${useFunction.transformDateDisplay(useFunction.dateInput.value)} ${useFunction.timeInput.value}`, 
-            `${useFunction.findFolderName(masterFolder)}`, `${useFunction.createIdNumber()}`, `${useFunction.folderDropdown.value}`
-            );
-        useFunction.addToFolders(newTodo, masterFolder);
-    }
+    newTodo = newTodoTemplate(
+        `${useFunction.titleInput.value}`, 
+        `${useFunction.descriptionInput.value}`, 
+        `${useFunction.priorityDropdown.value}`, 
+        `${useFunction.dateInput.value}`, `${useFunction.timeInput.value}`, 
+        `${useFunction.folderDropdown.value}`, `${useFunction.createIdNumber()}`
+        );
+    masterFolder.todos.push(newTodo);
 }
 
 export { createNewTodo, newTodoTemplate }

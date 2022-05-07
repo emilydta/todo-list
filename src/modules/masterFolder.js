@@ -1,31 +1,32 @@
-const masterFolder = [{
-    folderName: "All Todos",
+const masterFolder = { 
     todos: [{
         Title: "Test",
         Description: "blah blah blah",
         Priority: "High",
-        Date: "29/Apr/2022 21:00",
-        Folder: "Project",
+        Date: "29/Apr/2022",
+        Time: "21:00",
+        Folder: "Folder",
         idNumber: "123",
-        FolderId: "project",
     },
-    ],
-    idNumber: "all-todos"
-},
-{
-    folderName: "Project",
-    todos: [{
-        Title: "Test",
+    {
+        Title: "Test2",
+        Description: "blah blah blah",
+        Priority: "Low",
+        Date: "22/Jul/2022",
+        Time: "10:00",
+        Folder: "Project",
+        idNumber: "199",
+    },
+    {
+        Title: "Test3",
         Description: "blah blah blah",
         Priority: "High",
-        Date: "29/Apr/2022 21:00",
+        Date: "29/Apr/2022",
+        Time: "21:00",
         Folder: "Project",
-        idNumber: "123",
-        FolderId: "project",
-    }
-    ],
-    idNumber: "project"
-},
-];
+        idNumber: "129",
+    },],
+};
+
 
 export { masterFolder };

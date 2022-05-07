@@ -2,11 +2,14 @@ import './style.css'
 import { createDisplay } from './modules/interface'
 import { masterFolder } from './modules/masterFolder';
 
+//console.log(masterFolder)
 const display = createDisplay();
-display.createHeader();
+display.createMainHeader(masterFolder);
 display.createSidebar(masterFolder);
-display.createFolderContentsDisplay(masterFolder[0])
-display.sidebarFolderButtonFunctionality(masterFolder);
-display.createNewFolderScreen();
-display.eventListeners(masterFolder);
-console.log(masterFolder)
+display.createTodoListDisplay('All Todos', masterFolder.todos, masterFolder);
+display.createNewFolderScreen(masterFolder);
+
+
+
+
+

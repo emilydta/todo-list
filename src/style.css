@@ -1,13 +1,16 @@
+
 body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
     background: black;
+    overflow-x: hidden;
 }
 
 #main-header {
     display: flex;
-    position: fixed;
+    position: sticky;
+    top: 0;
     justify-content: space-between;
     align-items: center;
     background: black;
@@ -20,25 +23,25 @@ body {
     z-index: 5;
 }
 
-#folders > li, #todo-list-container > div, #add-new-todo, #create-new-folder, #cancel-new-todo {
+#folders-container > li, #todo-list-container > div, #add-new-todo, #create-new-folder, #cancel-new-todo {
     cursor: pointer;
 }
 
-#containers {
+#body-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: whitesmoke;;
+    background: whitesmoke;
 }
 
 #sidebar {
     display: flex;
+    position: sticky;
     flex-direction: column;
     align-items: center;
     list-style-type: none;
     min-height: 100vh;
     min-width: 10vw;
-    margin-left: 3em;
+    padding-left: 4em;
+    padding-right: 2em;
     overflow: hidden;
     z-index: 5;
 }
@@ -47,15 +50,14 @@ body {
     display: flex;
     flex-direction: column;
     background: whitesmoke;
-    width: 90vw;
-    height: 100vh;
+    min-width: 80vw;
+    
     padding: 20px;
-    margin-top: 8em;
-    margin-left: 2em;
-    overflow: hidden;
+    
+   
 }
 
-.todo-div {
+.todo-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -137,11 +139,11 @@ body {
     font-size: 0.9rem;
 }
 
-#folders > li {
+#folders-container > li {
     padding-bottom: 1em;
 }
 
-#folders {
+#folders-container {
     position: fixed;
     padding: 2em;
 }
@@ -207,3 +209,4 @@ body {
 .hide {
     display: none !important;
 }
+
