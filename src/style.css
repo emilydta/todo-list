@@ -23,6 +23,11 @@ body {
     z-index: 5;
 }
 
+#all-todos {
+    margin-bottom: 1em;
+    cursor: pointer;
+}
+
 #folders-container > li, #todo-list-container > div, #add-new-todo, #create-new-folder, #cancel-new-todo {
     cursor: pointer;
 }

@@ -1,5 +1,3 @@
-import { format } from 'date-fns';
-
 const todoFunctions = () => {
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description');
@@ -7,14 +5,6 @@ const todoFunctions = () => {
     const dateInput = document.getElementById('date-input');
     const timeInput = document.getElementById('time-input');
     const folderDropdown = document.getElementById('folder-dropdown');
-
-    const transformDateDisplay = (dateData) => {
-        if (dateData == "") {
-            return dateData = "-";
-        }
-        dateData = dateData.replace(/-/g, ", ");
-        return format(new Date(dateData), 'dd/MMM/yyyy');
-    }
 
     const createIdNumber = () => {
         let idNumber = + new Date();
@@ -52,7 +42,6 @@ const todoFunctions = () => {
     }
 
     return {
-        transformDateDisplay,
         createIdNumber,
         editTodoInputData,
         editTodo,
