@@ -394,7 +394,6 @@ const createDisplay = () => {
                             useFunction.editTodo(todo);
                             hideTodoScreen();
                             const todoContainer = document.getElementById('todo-list-container');
-                            const containerHeading = document.getElementById('container-heading');
                             if (todoContainer.classList[0] == "All") {
                                 todoContainer.remove();
                                 createTodoListDisplay('All Todos', mainFolder.todos, mainFolder);
