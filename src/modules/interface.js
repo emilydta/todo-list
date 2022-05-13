@@ -112,6 +112,7 @@ const createDisplay = () => {
                             }
                         }
                     })  
+                localStorage.setItem("masterFolderStore", JSON.stringify(mainFolder));
                 }
                 if (e.target.classList[0] == 'edit') {
                     mainFolder.todos.forEach(todo => {
@@ -136,35 +137,48 @@ const createDisplay = () => {
     }
 
     const getFolderHeadings = (mainFolder) => {
-        let folders = [];
-        mainFolder.todos.forEach((todo => {
-            Object.keys(todo).forEach(key => {
-                if (key == "Folder") {
-                    folders.push(todo[key]);
-                }
-            })
-        })) 
-        const uniqueFolders = [...new Set(folders)];
-        return uniqueFolders
+        if (localStorage.getItem("folderHeadings")) {
+            return JSON.parse(localStorage.getItem("folderHeadings"));
+        } else {
+            let folders = [];
+            mainFolder.todos.forEach((todo => {
+                Object.keys(todo).forEach(key => {
+                    if (key == "Folder") {
+                        folders.push(todo[key]);
+                    }
+                })
+            })) 
+            const uniqueFolders = [...new Set(folders)];
+            return uniqueFolders
+        }
     }
 
     const getSidebarFolders = () => {
-        let folders = [];
-        const sidebarFolders = document.getElementById('folders-container');
-        sidebarFolders.childNodes.forEach(listing => {
-            if (listing.tagName == 'LI') {
-                folders.push(listing.innerText);
-            }
-        })
-        return folders;
+        if (localStorage.getItem("folderHeadings")) {
+            return JSON.parse(localStorage.getItem("folderHeadings"));
+        } else {
+            let folders = [];
+            const sidebarFolders = document.getElementById('folders-container');
+            sidebarFolders.childNodes.forEach(listing => {
+                if (listing.tagName == 'LI') {
+                    folders.push(listing.innerText);
+                }
+            })
+            return folders;
+        }
     }
 
     const getAllFolders = (mainFolder) => {
-        const todoFolders = getFolderHeadings(mainFolder);
-        const sidebarFolders = getSidebarFolders();
-        const combinedFolders = sidebarFolders.concat(todoFolders);
-        const uniqueFolders = [...new Set(combinedFolders)];
-        return uniqueFolders;
+        if (localStorage.getItem("folderHeadings")) {
+            return JSON.parse(localStorage.getItem("folderHeadings"));
+        } else {
+            const todoFolders = getFolderHeadings(mainFolder);
+            const sidebarFolders = getSidebarFolders();
+            const combinedFolders = sidebarFolders.concat(todoFolders);
+            const uniqueFolders = [...new Set(combinedFolders)];
+            localStorage.setItem("folderHeadings", JSON.stringify(uniqueFolders));
+            return uniqueFolders;
+        }
     }
 
     const displayTodos = (mainFolder, folder) => {
@@ -261,6 +275,7 @@ const createDisplay = () => {
         })
         if (newFolderExists == false) {
             uniqueFolders.push(newFolderInput.value);
+            localStorage.setItem("folderHeadings", JSON.stringify(uniqueFolders));
             const newFolderButton = document.getElementById('create-new-folder');
             const folderListing = document.createElement('li');
             const foldersContainer = document.getElementById('folders-container');
@@ -316,11 +331,11 @@ const createDisplay = () => {
     }
 
     const createEditScreen = (todo, mainFolder) => {
+        populateFolderDropdown(mainFolder);
         useFunction.editTodoInputData(todo);
         let confirmEdit = document.getElementsByClassName('todo-action-button');
         confirmEdit[0].setAttribute('id', 'confirm-edit');
         confirmEdit[0].innerText = 'Edit';
-        populateFolderDropdown(mainFolder);
         showTodoScreen();
     }
 
@@ -390,7 +405,7 @@ const createDisplay = () => {
                             }
                         }
                     })
-                    
+                    localStorage.setItem("masterFolderStore", JSON.stringify(mainFolder)); 
                 }
             }) 
         })

@@ -17,7 +17,7 @@ const todoFunctions = () => {
         dateInput.value = todo.Date;
         timeInput.value = todo.Time;
         priorityDropdown.value = todo.Priority;
-        folderDropdown.value = todo.FolderId
+        folderDropdown.value = todo.Folder
     }
 
     const editTodo = (todo) => {

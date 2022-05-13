@@ -15,6 +15,7 @@ const createNewTodo = (newTodo) => {
         `${useFunction.folderDropdown.value}`, `${useFunction.createIdNumber()}`
         );
     masterFolder.todos.push(newTodo);
+    localStorage.setItem("masterFolderStore", JSON.stringify(masterFolder));
 }
 
 export { createNewTodo, newTodoTemplate }
