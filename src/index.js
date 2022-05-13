@@ -1,12 +1,17 @@
-import './style.css'
-import { createDisplay } from './modules/interface'
+import './style.css';
+import { createDisplay } from './modules/interface';
 import { masterFolder } from './modules/masterFolder';
 
+localStorage.setItem("masterFolderStore", JSON.stringify(masterFolder));
+
 const display = createDisplay();
-display.createHeader();
+display.createMainHeader(masterFolder);
 display.createSidebar(masterFolder);
-display.createFolderContentsDisplay(masterFolder[0])
-display.sidebarFolderButtonFunctionality(masterFolder);
-display.createNewFolderScreen();
+display.createTodoListDisplay('All Todos', masterFolder.todos, masterFolder);
+display.createNewFolderScreen(masterFolder);
 display.eventListeners(masterFolder);
-console.log(masterFolder)
+
+
+
+
+
